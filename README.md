@@ -47,6 +47,8 @@ marketintelligence-ai/
 │   ├── server.py            # MCP FastAPI server
 │   └── tools.py             # Actual tool logic
 │
+├── frontend/                
+│   └── index.html           #Frontend part
 ├── logs/
 │   └── execution.log        # Tool invocation logs
 │
@@ -144,3 +146,4 @@ This proves correct agent–tool separation.
 
 This project demonstrates a **production-style agentic AI system** rather than a
 single-script solution and fully satisfies the assignment requirements.
+
