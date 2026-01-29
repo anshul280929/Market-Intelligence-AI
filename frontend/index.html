@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Market Intelligence AI</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f4f6f8;
+      padding: 20px;
+    }
+    .container {
+      max-width: 900px;
+      margin: auto;
+      background: white;
+      padding: 20px;
+      border-radius: 8px;
+    }
+    h1 {
+      text-align: center;
+    }
+    input, button {
+      padding: 10px;
+      font-size: 16px;
+    }
+    button {
+      background: #2563eb;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+    .section {
+      margin-top: 20px;
+    }
+    .card {
+      background: #f1f5f9;
+      padding: 10px;
+      margin-top: 8px;
+      border-radius: 6px;
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <h1>Market Intelligence AI</h1>
+
+  <input id="industry" placeholder="Enter Industry (e.g. NBFC)" />
+  <button type="button" onclick="analyze()">Analyze</button>
+
+  <div id="output"></div>
+</div>
+
+<script>
+async function analyze() {
+  const industry = document.getElementById("industry").value;
+  const output = document.getElementById("output");
+
+  if (!industry) {
+    alert("Enter industry");
+    return;
+  }
+
+  output.innerHTML = "<p>Analyzing...</p>";
+
+  try {
+    const response = await fetch("http://127.0.0.1:8000/analyze", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({ industry })
+    });
+
+    if (!response.ok) {
+      throw new Error("Server error: " + response.status);
+    }
+
+    const data = await response.json();
+    const report = data.report;
+
+    let html = `<h3>Summary</h3><p>${report.summary}</p>`;
+
+    html += `<h3>Impact Radar</h3>`;
+    report.impact_radar.forEach(i => {
+      html += `
+        <div class="card">
+          <b>${i.event}</b><br/>
+          Impact: ${i.impact_level} (${i.score})
+        </div>
+      `;
+    });
+
+    html += `<h3>Risks</h3>`;
+    report.risks.forEach(r => {
+      html += `<div class="card">${r}</div>`;
+    });
+
+    html += `<h3>Opportunities</h3>`;
+    report.opportunities.forEach(o => {
+      html += `<div class="card">${o}</div>`;
+    });
+
+    output.innerHTML = html;
+
+  } catch (err) {
+    console.error(err);
+    output.innerHTML = `
+      <p style="color:red;">
+        Failed to fetch report. Check console & API server.
+      </p>
+    `;
+  }
+}
+</script>
+
+
+</body>
+</html>
