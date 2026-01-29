@@ -119,6 +119,11 @@ The API returns a structured JSON market intelligence report including:
 
 ---
 
+## Screenshot
+
+<img width="579" height="924" alt="Screenshot 2026-01-29 110720" src="https://github.com/user-attachments/assets/f4402469-5f61-499b-9a14-88b4e9595b6f" />
+
+
 ## Logging
 
 All MCP tool calls are logged in:
@@ -146,4 +151,5 @@ This proves correct agent–tool separation.
 
 This project demonstrates a **production-style agentic AI system** rather than a
 single-script solution and fully satisfies the assignment requirements.
+
 
